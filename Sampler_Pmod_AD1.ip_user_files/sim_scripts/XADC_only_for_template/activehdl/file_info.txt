@@ -1,0 +1,5 @@
+xpm_cdc.sv,systemverilog,xpm,D:/Xilinx/Vivado/2021.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,
+xpm_memory.sv,systemverilog,xpm,D:/Xilinx/Vivado/2021.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv,
+xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2021.2/data/ip/xpm/xpm_VCOMP.vhd,
+XADC_only_for_template.v,verilog,xil_defaultlib,../../../../Sampler_Pmod_AD1.gen/sources_1/ip/XADC_only_for_template/XADC_only_for_template.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v

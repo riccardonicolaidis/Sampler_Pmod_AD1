@@ -45,6 +45,14 @@ I have used the JC interface since it is configured to run at High-speeds.
 
 
 -----------------------------
+## Changes in the project
+
+- 02/04/2022: 
+    - XADC channels are set to the unipolar mode. 
+    - DC blocking filter added for testing
+    - Additional Most Significant Bit (MSB) added to the 12 bit data bus to prevent overflow in the DSP. In this way if we perform a subtraction and we interpret the signal in the bipolar notation (2's complement for negative numbers) and the result is negative, the information about the sign is preserved and the value can safely oscillate about 0. This is important for the DC filtering since we want an AC signal without any offset.
+
+-----------------------------
 
 ## Functionalities of the device
 
@@ -76,6 +84,53 @@ To create your personal module follow these steps:
 - Then you have to generate and synthesise the required files (Click on **Generate** in the pop-up window). 
 - In the file manager, where you can see the **Source Hierarchy** click on the **IP sources** panel.
 - In the path: IP_COMPONENT_NAME >> Instantiation template >> ...    youìll find the two **Instantiation templates**, one written in **Verilog HDL** and the other in **VHDL**. Now you can instantiate your customised module into your design. 
+
+-----------------------------
+## Some important information about the XADC connections on the Arty A7 35T
+
+**Xilinx xadc interface:**
+- XADC in sequence mode
+- DRP interface is connected to atomtically readout the pre-designated channels
+- The readout is stored into corresponding register
+
+**Arty board configuration**
+- vp/vn channel
+- 13 aux channels:
+    - 6 single-ended channels
+    - 3 differential channels
+    - 4 on-board voltage/current channels
+- The design enables all 16 aux channels and 16 aux reading in a register file. vp/temp/vcc in three registers.
+
+**Channel mapping (arty signal: aux)**
+- Single-ended channels (max=3V via voltage divider)
+    - a0: 4
+    - a1: 5
+    - a2: 6
+    - a3: 7
+    - a4: 15
+    - a5: 0
+    - differential channels  (max=1V)
+    - a6/a7: 12 (diff)
+    - a8/a9: 13 (diff)
+    - a10/a11: 14 (diff)
+- On-board v-i channel (not used)
+
+
+
+|  # 	|  PIN       | DADDR   |      Channel ADC	      |
+|-------|------------|---------|--------------------------|
+|  1.   | v_P / v_N  |    03h  |   DEDICATED DIFFERENTIAL |
+|  2.   | A0         |    14h  |   Channel 4              |
+|  3.   | A1		 |    15h  |   Channel 5              |
+|  4.   | A2         |    16h  |   Channel 6              |
+|  5.   | A3         |    17h  |   Channel 7              |
+|  6.   | A4         |    1Fh  |   Channel 15             |
+|  7.   | A5	     |    10h  |   Channel 0              |
+|  8.   | A6+  / A7- |    1Ch  |   Channel 12             |
+|  9.   | A8+  / A9- |    1Dh  |   Channel 13             |
+|  10.  | A10+ / A11-|    1Eh  |   Channel 14             |
+
+
 
 
 -----------------------------

@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
-| Date         : Fri Apr  1 17:55:56 2022
+| Date         : Sat Apr  2 19:17:24 2022
 | Host         : LAPTOP-LB6J3CUA running 64-bit major release  (build 9200)
 | Command      : report_utilization -file Sampler_top_module_utilization_synth.rpt -pb Sampler_top_module_utilization_synth.pb
 | Design       : Sampler_top_module
@@ -31,11 +31,11 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             |  504 |     0 |          0 |     20800 |  2.42 |
-|   LUT as Logic          |  504 |     0 |          0 |     20800 |  2.42 |
+| Slice LUTs*             |  918 |     0 |          0 |     20800 |  4.41 |
+|   LUT as Logic          |  918 |     0 |          0 |     20800 |  4.41 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
-| Slice Registers         |  577 |     0 |          0 |     41600 |  1.39 |
-|   Register as Flip Flop |  577 |     0 |          0 |     41600 |  1.39 |
+| Slice Registers         |  945 |     0 |          0 |     41600 |  2.27 |
+|   Register as Flip Flop |  945 |     0 |          0 |     41600 |  2.27 |
 |   Register as Latch     |    0 |     0 |          0 |     41600 |  0.00 |
 | F7 Muxes                |    0 |     0 |          0 |     16300 |  0.00 |
 | F8 Muxes                |    0 |     0 |          0 |      8150 |  0.00 |
@@ -56,9 +56,9 @@ Table of Contents
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 4     |          Yes |           - |          Set |
-| 313   |          Yes |           - |        Reset |
+| 680   |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
-| 260   |          Yes |       Reset |            - |
+| 261   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -113,7 +113,7 @@ Table of Contents
 +------------+------+-------+------------+-----------+-------+
 |  Site Type | Used | Fixed | Prohibited | Available | Util% |
 +------------+------+-------+------------+-----------+-------+
-| BUFGCTRL   |    1 |     0 |          0 |        32 |  3.13 |
+| BUFGCTRL   |    2 |     0 |          0 |        32 |  6.25 |
 | BUFIO      |    0 |     0 |          0 |        20 |  0.00 |
 | MMCME2_ADV |    0 |     0 |          0 |         5 |  0.00 |
 | PLLE2_ADV  |    0 |     0 |          0 |         5 |  0.00 |
@@ -147,20 +147,21 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDCE     |  313 |        Flop & Latch |
-| FDRE     |  260 |        Flop & Latch |
-| LUT2     |  197 |                 LUT |
-| LUT6     |  152 |                 LUT |
-| LUT5     |   90 |                 LUT |
-| LUT4     |   82 |                 LUT |
-| LUT3     |   75 |                 LUT |
-| CARRY4   |   49 |          CarryLogic |
+| LUT2     |  730 |                 LUT |
+| FDCE     |  680 |        Flop & Latch |
+| FDRE     |  261 |        Flop & Latch |
+| CARRY4   |  165 |          CarryLogic |
+| LUT6     |  153 |                 LUT |
+| LUT3     |  125 |                 LUT |
+| LUT5     |   86 |                 LUT |
+| LUT4     |   83 |                 LUT |
 | IBUF     |   24 |                  IO |
-| LUT1     |   10 |                 LUT |
-| OBUF     |    7 |                  IO |
+| LUT1     |    8 |                 LUT |
+| OBUFT    |    4 |                  IO |
 | FDPE     |    4 |        Flop & Latch |
+| OBUF     |    3 |                  IO |
+| BUFG     |    2 |               Clock |
 | XADC     |    1 |              Others |
-| BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 
 

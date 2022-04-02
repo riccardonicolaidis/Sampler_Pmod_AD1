@@ -20,6 +20,13 @@ parameter N_P         = 12;                   // Number of bits for peak detecti
 parameter N_PMOD      = 1;                    // Number of Pmods
 parameter N_CH        = N_XADC_CH + 2*N_PMOD; // Total number of channels 
 
+/**************************************************
+    COMMENTS ON THE PARAMETERS
+
+- N_P = 12 + 1 : This because when we make the subraction of the
+                 baseline overflows are avoided.
+**************************************************/
+
 // #################################
 // RESET  -> ACTIVE LOW DEFINITION
 // #################################
@@ -31,9 +38,24 @@ assign reset_low = ~reset_high; // Active low reset
 
 // Signal declaration 
 wire         [N_T-1:0] time_ms;                     // TIME ms
-wire  signed [N_P-1:0] A                [N_CH-1:0]; // Sampled channels (wire bus array)
-logic signed [N_P-1:0] A_unipolar       [N_CH-1:0]; // Sampled channels (wire bus array)
+wire  signed [N_P-1:0] A                [N_CH-1:0]; // Sampled channels (wire bus array) 12 bit
+wire  signed [N_P:0]   A_padded         [N_CH-1:0]; // Sampled channels (wire bus array) 13 bit
+logic signed [N_P:0]   A_AC             [N_CH-1:0]; // Sampled channels (wire bus array) 13 bit
 wire                   Visualize_pulse;             // Pulse to display data on UART
+wire                   w_clk_1_MHz;
+// **************************************
+//      FREQUENCY DIVIDER
+// **************************************
+Module_FrequencyDivider Sampling_frequency
+(	
+    .clk(clk),
+    .period(30'd50000), 
+    .reset(reset_low),   
+    .clk_out(w_clk_sampl)
+);
+
+
+
 
 
 // *************************************
@@ -54,7 +76,7 @@ Module_Time_Measurement Time_Measurement
 XADC_module 
 #(
     .N_CH(N_XADC_CH),   // Number of channels 
-    .N_P(N_P)           // Number of bits 12
+    .N_P(N_P)         // Number of bits 12
 )
 XADC_WRAPPING_CIRCUIT
 (
@@ -65,8 +87,8 @@ XADC_WRAPPING_CIRCUIT
     .adc_a_n(adc_a_n), // input analog
     .vp_in(vp_in),
     .vn_in(vn_in),
-    .A(A[N_XADC_CH-1:0]),             // A Digitalized 12-bit OUT
-    .A_pulse()         // A ready pulse 
+    .A(A[N_XADC_CH-1:0]),   // A Digitalized 12-bit OUT
+    .A_pulse()                       // A ready pulse 
 );
 
 
@@ -124,21 +146,40 @@ Pulse_generator PULSE_GEN_10Hz
 // Need to create a bridge to collact also the data coming from the Pmod
 genvar i;
 generate
-    for(i=0; i<= (N_XADC_CH-1); i=i+1) begin
-        assign A_unipolar[i] = {(!A[i][N_P-1]),(A[i][(N_P-2):0])};
-    end
-
-    for(i=N_XADC_CH; i<=(N_CH-1);i = i+1) begin 
-        assign A_unipolar[i] = A[i];
+    for(i=0; i<=(N_CH-1); i = i+1) begin : Combinational_concatenation
+        assign A_padded[i]= {1'b0, A[i]};
     end
 endgenerate 
 
+// Now I add DC blockers to test the device
+
+generate
+    for(i=0; i<=(N_CH-1); i = i+1) begin : DC_block_pipeline
+        DC_Blocker 
+        #(
+            .width(N_P+1),         // width of the input data bus 
+            .Size_log2(14)         // Number of sampels in the average 
+        )
+            FILTER_DC
+        (	
+	        .clk(clk),                       // clock 
+	        .reset(reset_low),               // reset low 
+	        .sampl_freq(w_clk_sampl),        // update frequency
+            .number_samples_to_skip(30'd1),  // Number of samples to skip
+	        .data_in(A_padded[i]),           // data input 
+	        .data_out(A_AC[i]),              // data output 
+            .DC_subtracted()
+        );
+    end
+
+
+endgenerate
 
 
 Printer_uart
 #(
     .N_T(N_T),
-    .N_P(N_P),
+    .N_P(N_P+1),
     .N_CH(N_CH),
     .ADDR_WIDTH(8)
 )
@@ -147,10 +188,10 @@ UART_DISPLAY
     .clk(clk),
     .reset(reset_low),
     .time_event(time_ms),        // Time of the event
-    .A_peak_event(A_unipolar),            // Peak values array of the event
+    .A_peak_event(A_AC),            // Peak values array of the event
     .DAQ_pulse(Visualize_pulse), // Output pulse to send data to memory or uart
     .tx(tx),
-    .control_state(led)
+    .control_state()
 );
 
 

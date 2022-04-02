@@ -213,7 +213,7 @@ module xadc_wiz_0
           assign aux_channel_n[15] = vauxn15;
 XADC #(
     .INIT_40(16'h0000),
-    .INIT_41(16'h213F),
+    .INIT_41(16'h21AF),
     .INIT_42(16'h0400),
     .INIT_43(16'h0000),
     .INIT_44(16'h0000),
@@ -225,7 +225,7 @@ XADC #(
     .INIT_4A(16'h0000),
     .INIT_4B(16'h0000),
     .INIT_4C(16'h0000),
-    .INIT_4D(16'h0030),
+    .INIT_4D(16'h0000),
     .INIT_4E(16'h0000),
     .INIT_4F(16'h0000),
     .INIT_50(16'hB5ED),
@@ -247,8 +247,9 @@ XADC #(
     .IS_CONVSTCLK_INVERTED(1'b0),
     .IS_DCLK_INVERTED(1'b0),
     .SIM_DEVICE("7SERIES"),
-    .SIM_MONITOR_FILE("design.txt")
-    )  
+    .SIM_MONITOR_FILE("design.txt") 
+    ) 
+      
 inst (
         .CONVST(GND_BIT),
         .CONVSTCLK(GND_BIT),

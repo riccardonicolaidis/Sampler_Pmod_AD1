@@ -93,6 +93,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
+  C:/Users/rikir/Documents/FPGA_projects/Sampler_Pmod_AD1/Sampler_Pmod_AD1.srcs/sources_1/imports/sources_1/imports/Sources_Muon_telescope/DC_blocker.sv
   C:/Users/rikir/Documents/FPGA_projects/Sampler_Pmod_AD1/Sampler_Pmod_AD1.srcs/sources_1/imports/sources_1/imports/Sources_Muon_telescope/Frequency_Divider.sv
   C:/Users/rikir/Documents/FPGA_projects/Sampler_Pmod_AD1/Sampler_Pmod_AD1.srcs/sources_1/imports/sources_1/imports/Sources_Muon_telescope/Printer_uart.sv
   C:/Users/rikir/Documents/FPGA_projects/Sampler_Pmod_AD1/Sampler_Pmod_AD1.srcs/sources_1/imports/sources_1/new/Pulse_generator.sv

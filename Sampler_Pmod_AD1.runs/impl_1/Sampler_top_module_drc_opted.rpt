@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
-| Date         : Fri Apr  1 17:56:36 2022
+| Date         : Sat Apr  2 19:18:11 2022
 | Host         : LAPTOP-LB6J3CUA running 64-bit major release  (build 9200)
 | Command      : report_drc -file Sampler_top_module_drc_opted.rpt -pb Sampler_top_module_drc_opted.pb -rpx Sampler_top_module_drc_opted.rpx
 | Design       : Sampler_top_module

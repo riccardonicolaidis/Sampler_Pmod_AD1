@@ -1,0 +1,2 @@
+XADC_only_for_template.v,verilog,xil_defaultlib,../../../../Sampler_Pmod_AD1.gen/sources_1/ip/XADC_only_for_template/XADC_only_for_template.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v
